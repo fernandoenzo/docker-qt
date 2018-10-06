@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e  # Exit immediately if a command exits with a non-zero status.
+set -x  # All executed commands are printed to the terminal
+
+PROGRAM=qt-opensource-linux-x64-5.11.2.run
+
+aptitude update ; aptitude install -y libdbus-1-3 libfontconfig1 libx11-6 libx11-xcb1
+
+wget -P /tmp/ http://download.qt.io/official_releases/qt/5.11/5.11.2/$PROGRAM
+
+./tmp/scripts/extract-qt-installer /tmp/$PROGRAM /opt/Qt
+
+apt-get -y autoremove ; aptitude -y autoclean ; apt-get -y autoclean
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.aptitude /root/.wget-hsts /root/.cache
